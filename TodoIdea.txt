@@ -1,0 +1,74 @@
+What properties does a Todo have?
+
+==>> my todos should have an ID and an input field for 
+Todo
+│
+├── id
+├── title
+├── description
+├── purpose
+├── completed
+├── dueDate
+├── priority - priority:
+                       "low"
+                       "medium"
+                       "high"
+├── checklist
+└── createdAt
+
+///////////////////////////////////
+
+What properties does a Project have?
+     Project
+   │
+   ├── Todo  - A project is a container/group for Todos. For example:
+                             Project: "JavaScript Learning"
+                              ├── Learn closures
+                              ├── Build Todo App
+                              ├── Practice algorithms
+                              └── Learn modules
+   ├── Todo
+   ├── Todo
+   └── Tod
+==>> A project is a Todo inside a Todos where user can add their own daily or routine based work, ican implement as an object
+     holds key-values pairs.  
+     Property would i add expiryDate<date>, Purpose<p>,  user add ImageTag<img>, voiceNote.
+
+     Project: "Personal"
+    ├── Grocery shopping
+    ├── Gym
+    └── Clean room
+
+    
+
+////////////////////////
+
+What does your application state need?
+==>> input tags which will get TITLE input field UI,  DESCRPTION inputTextAREA field UI, CHECKBOX UI, BUTTONS UI,
+      ADD buttons UI-project Addition inside a Todo and outside also.
+
+
+Which functions belong to Todo?
+==>>  function for - TITLE, DESCRIPTION, Fullfiled all details getting into return {Object}; 
+      function for ID creation - then the return object from function should attached with that ID. and return {object with ID };
+      function for getting - data object into localStorage.
+      function for Retrieving - data from local Storage.
+      function for retrieveData to paste in UI.
+      function Click Handler whos getting input fileds data put into first function.
+      function to delete todo.
+
+
+Which functions belong to Project?
+==>>  function handleClick where it will create a div with class id for project.
+      function clickOpenUI for project with input fields.
+      function for notification when expiry reach.
+
+
+Which functions belong to storage?
+==>>   function for local storage keeping the things from function to local storage
+       function through ID retrieve data from local Storage.
+       function to delete todo from storage.
+
+
+Which functions belong to DOM?
+===>> function gets ID and class elelments and add textContent into it.
