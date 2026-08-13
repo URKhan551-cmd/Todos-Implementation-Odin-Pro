@@ -39,9 +39,37 @@ What properties does a Project have?
     ├── Gym
     └── Clean room
 
-    
+    Project
+│
+├── id: 123
+├── name: "JavaScript"
+│
+└── todos:
+      ├── Todo 1
+      ├── Todo 2
+      └── Todo 3
+
+
+projects
+│
+├── Project 1
+│    ├── Todo
+│    ├── Todo
+│    └── Todo
+│
+├── Project 2
+│    ├── Todo
+│    └── Todo
+│
+└── Project 3
+     └── Todo
+
+currentProjectId → Project 2
+
+That's your application state.
 
 ////////////////////////
+
 
 What does your application state need?
 ==>> input tags which will get TITLE input field UI,  DESCRPTION inputTextAREA field UI, CHECKBOX UI, BUTTONS UI,
@@ -49,6 +77,37 @@ What does your application state need?
 
 
 Which functions belong to Todo?
+
+Todo module
+
+The Todo module should be concerned with Todo data.
+
+Think:
+
+Todo Module
+│
+├── createTodo()
+├── updateTodo()
+├── toggleTodo()
+└── ...
+
+
+createTodo()
+       ↓
+create ID
+       ↓
+create Todo object
+
+Good thinking.
+
+{{{{{{  crypto.randomUUID()     }}}}}}
+
+instead of writing your own complicated ID generator.
+
+But try to discover this yourself before implementing it.
+
+
+
 ==>>  function for - TITLE, DESCRIPTION, Fullfiled all details getting into return {Object}; 
       function for ID creation - then the return object from function should attached with that ID. and return {object with ID };
       function for getting - data object into localStorage.
@@ -65,10 +124,143 @@ Which functions belong to Project?
 
 
 Which functions belong to storage?
+Your storage functions are in the wrong place
+You wrote:
+function for getting data object into localStorage and
+function for retrieving data from localStorage
+These should not belong to Todo.
+They belong to:
+storage.js
+
+Todo module
+     ↓
+creates/modifies Todo
+
+Storage module
+     ↓
+saves/loads application data
+
+
+Storage module
+Your storage design is mostly correct.
+I'd structure the responsibility as:
+Storage
+│
+├── save()
+├── load()
+└── clear()
+
+But here's an important points
+Don't make storage responsible for:
+deleteTodo()
+Storage doesn't know what a Todo is supposed to do.
+Instead:
+
+
 ==>>   function for local storage keeping the things from function to local storage
        function through ID retrieve data from local Storage.
        function to delete todo from storage.
 
 
 Which functions belong to DOM?
+
+Your DOM module
+
+You said:
+
+function gets ID and class elements and add textContent into it.
+
+That's only one small part of what the DOM module should do.
+
+Your DOM module will be responsible for:
+
+DOM
+│
+├── renderProjects()
+├── renderTodos()
+├── renderTodo()
+├── renderTodoDetails()
+├── renderProject()
+├── showTodoForm()
+├── showProjectForm()
+├── clearTodoContainer()
+└── updateUI()
+
+But don't create all of these immediately.
+
 ===>> function gets ID and class elelments and add textContent into it.
+
+
+src/
+│
+├── index.js
+│
+├── styles.css
+│
+└── modules/
+    │
+    ├── todo.js
+    │
+    ├── project.js
+    │
+    ├── app.js
+    │
+    ├── storage.js
+    │
+    └── dom.js
+
+
+todo.js
+────────
+Todo creation + Todo data operations
+
+
+project.js
+──────────
+Project creation + project/todo relationships
+
+
+app.js
+──────
+Application state + coordinating operations
+
+
+storage.js
+──────────
+localStorage persistence
+
+
+dom.js
+──────
+Rendering + DOM manipulation
+
+
+index.js
+────────
+Application entry point
+
+
+
+One more important correction
+
+You said:
+
+function for retrieveData to paste in UI.
+
+Separate those two operations.
+
+Don't create:
+
+retrieveDataAndPasteIntoUI()
+
+Instead:
+
+storage.load()
+       ↓
+application state
+       ↓
+dom.render()
+
+This separation is exactly what the assignment is trying to teach you.
+
+
