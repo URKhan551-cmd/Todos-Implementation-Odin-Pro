@@ -1,0 +1,38 @@
+tTodos
+
+
+   get an aceess to dom values of input what user  keep it in variables.
+
+
+
+function createTodo(valuesData){
+  return {
+id: uniqueRandomUUId(),
+title: titleVariable,
+.....
+
+  }
+};
+
+function editTodo(id){
+retrieve todo according to id;
+then call the storage function with that modified todo to store in storaeg.
+};
+
+function storageTodo(todo){
+ localStorage.set(todo);
+
+}
+
+
+
+function getTodo(){
+  localStorage.get(todos);
+functionCall UI (provide Todos);
+}
+
+
+function deleteTodo(id){
+
+}
+
