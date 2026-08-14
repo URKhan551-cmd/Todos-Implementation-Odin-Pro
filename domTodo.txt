@@ -1,0 +1,12 @@
+here i will access DOM
+
+export default const title = document.querySelector("#title");
+
+function cleanForm(){
+  // here w will clear all the fields for upcoming data
+}
+
+export default function getFormValues()
+
+export default function populateForm(todo)
+export default function validateForm();
