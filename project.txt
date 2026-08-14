@@ -1,0 +1,6 @@
+Project responsibilities
+
+createProject()
+addTodo()
+removeTodo()
+findTodo()
