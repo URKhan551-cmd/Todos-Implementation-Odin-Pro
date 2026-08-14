@@ -1,11 +1,3 @@
-export default function storageTodo(todo){
- localStorage.set(todo);
+export default storeData(){}
 
-}
-
-
-
-export default function getTodo(){
-  localStorage.get(todos);
-functionCall UI (provide Todos);
-}
+export default loadData(){}
