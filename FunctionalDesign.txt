@@ -5,7 +5,7 @@ tTodos
 
 
 
-function createTodo(valuesData){
+export default function createTodo(valuesData){
   return {
 id: uniqueRandomUUId(),
 title: titleVariable,
@@ -14,25 +14,22 @@ title: titleVariable,
   }
 };
 
-function editTodo(id){
+export default function editTodo(id){
 retrieve todo according to id;
-then call the storage function with that modified todo to store in storaeg.
+// then call the storage function with that modified todo to store in storaeg.
+stogrageTodo(todo);
 };
 
-function storageTodo(todo){
- localStorage.set(todo);
-
+export default completeTodo(id){
+  // here we wil change its ststus.
 }
 
-
-
-function getTodo(){
-  localStorage.get(todos);
-functionCall UI (provide Todos);
+export default function deleteTodo(id){
+  todos.filter(todo => todo.id !== id);
+// modify todos in storage again after deletion.
+  storageTodo(todos);
 }
 
-
-function deleteTodo(id){
-
+export default function cleanInput(){
+all the fields should be clean for next inpuut data.
 }
-
