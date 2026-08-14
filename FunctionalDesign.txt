@@ -14,7 +14,7 @@ title: titleVariable,
   }
 };
 
-export default function editTodo(id){
+export default function editTodo(id, newValues){
 retrieve todo according to id;
 // then call the storage function with that modified todo to store in storaeg.
 stogrageTodo(todo);
