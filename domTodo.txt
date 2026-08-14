@@ -10,3 +10,12 @@ export default function getFormValues()
 
 export default function populateForm(todo)
 export default function validateForm();
+
+
+Browser/UI responsibilities
+
+getFormValues()
+clearForm()
+renderProjects()
+renderTodos()
+renderTodoDetails()
