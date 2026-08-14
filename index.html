@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos Odin Pro</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="app">
+        
+        <header class="header">
+            <h1>My TODOS</h1>
+            <button 
+            type="button"
+            id="mobile-manu-btn"
+            aria-label="Open projects manu">
+             ☰
+        </button>
+
+        </header>
+        <main class="main-layout">
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-header">
+                    <h2>Projects</h2>
+                    <button 
+                    type="button"
+                    id="add-project-btn">
+                   + New Project
+                </button>
+                </div>
+
+                <nav id="project-list" class="project-list" aria-label="projects">
+                    <button type="button" 
+                    class="project-item active"
+                    data-project-id="default"
+                    > <span>★</span>
+                      <span>Default</span>
+                    </button>
+                </nav>
+            </aside>
+
+
+            <!-- todos content here  -->
+           <section class="content">
+            <div class="content-header">
+               <div>
+                <p id="content-label">
+                    project
+                </p>
+
+                <h2 id="current-project-name">Default</h2>
+               </div>
+
+               <button type="button" id="add-todo-btn">+ Add Todo</button>
+            </div>
+
+            <!-- todo list here -->
+             <section id="todo-list" class="todo-list" aria-label="todo-list">
+                <!--  JavaScript will create todos here.
+
+          Example:
+
+          <article class="todo-card"> -->
+
+
+
+             </section>
+
+             <!-- Empty project message -->
+
+        <div
+          id="empty-state"
+          class="empty-state"
+        >
+        <h3>No Todos Yet</h3>
+        <p>Create your first todo for this project.</p>
+        <button type="button" id="empty-add-todo-btn"> + Add Todo</button>
+
+        </div>
+           </section>
+
+        </main>
+
+       <!-- here we will create form  -->
+        <dialog id="todo-dialog">
+            <form id="dialog-form" method="dialog">
+                <div class="dialog-header">
+                    <h2 id="todo-form-title">Create Todo</h2>
+                    <button type="button" id="close-dialog-btn" aria-label="close">x</button>
+
+                    <!-- Todo ID
+           Hidden because JavaScript
+           may need it when editing -->
+
+                    <input type="hidden" id="todo-id">
+
+
+                    <div class="form-group">
+                        <label for="todo-title">
+                            Title
+                        </label>
+                        <input
+                             type="text"
+                             id="todo-title"
+                             name="title"
+                             required
+                             maxlength="100"
+                             placeholder="e.g. Learn JavaScript"
+                           >
+                    </div>
+
+                    <!-- description yaha hoga -->
+
+                    <div class="form-group">
+              
+                      <label for="todo-description">
+                        Description
+                      </label>
+              
+                      <textarea
+                        id="todo-description"
+                        name="description"
+                        rows="4"
+                        placeholder="What do you need to do?"
+                      ></textarea>
+              
+                    </div>
+
+                    <!-- purpose -->
+                      <div class="form-group">
+
+                      <label for="todo-purpose">
+                        Purpose
+                      </label>
+
+                      <input
+                        type="text"
+                        id="todo-purpose"
+                        name="purpose"
+                        placeholder="Why is this important?"
+                      >
+
+                    </div>
+
+                    <!-- Due Date -->
+
+                      <div class="form-group">
+
+                        <label for="todo-due-date">
+                          Due Date
+                        </label>
+                
+                        <input
+                          type="date"
+                          id="todo-due-date"
+                          name="dueDate"
+                          required
+                        >
+                
+                      </div>
+
+                      <fieldset class="form-group">
+                        <legend>Priority</legend>
+
+                        <label>
+                            <input
+                              type="radio"
+                              name="priority"
+                              value="low"
+                            >
+                
+                         Low
+                         </label>
+
+                         <label>
+                              <input
+                                type="radio"
+                                name="priority"
+                                value="medium"
+                                checked
+                              >
+                    
+                              Medium
+                            </label>
+
+                            <label>
+                                  <input
+                                    type="radio"
+                                    name="priority"
+                                    value="high"
+                                  >
+                        
+                                  High
+                                </label>
+                      </fieldset>
+
+
+                       <!-- Notes -->
+
+                        <div class="form-group">
+                  
+                          <label for="todo-notes">
+                            Notes
+                          </label>
+                  
+                          <textarea
+                            id="todo-notes"
+                            name="notes"
+                            rows="3"
+                            placeholder="Additional notes..."
+                          ></textarea>
+                  
+                        </div>
+
+                        <!-- Checklist -->
+
+                          <fieldset class="form-group">
+                    
+                            <legend>
+                              Checklist
+                            </legend>
+                    
+                            <div id="checklist-container">
+                    
+                              <!--
+                    
+                              JavaScript will dynamically
+                              create checklist items here.
+                    
+                              -->
+                    
+                            </div>
+
+                            <button
+                                  type="button"
+                                  id="add-checklist-item"
+                                >
+                                  + Add Checklist Item
+                                </button>
+                          </fieldset>
+                          </div>
+
+                <!-- Form buttons -->
+
+                     <div class="form-actions">
+            
+                     <button
+                       type="button"
+                       id="cancel-todo"
+                      >
+                        Cancel
+                      </button>
+            
+                      <button
+                        type="submit"
+                        id="save-todo"
+                      >
+                        Save Todo
+                      </button>
+            
+                  </div>
+                         </form>
+        </dialog>
+
+
+        <!-- project ka dialog bana na ha -->
+
+        <dialog id="project-dialog"> 
+            <form id="project-form" method="dialog">
+
+      <div class="dialog-header">
+
+        <h2>
+          Create Project
+        </h2>
+
+        <button
+          type="button"
+          id="close-project-dialog"
+          aria-label="Close"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="project-name">
+          Project Name
+        </label>
+
+        <input
+          type="text"
+          id="project-name"
+          name="projectName"
+          required
+          maxlength="50"
+          placeholder="e.g. Work"
+        >
+
+      </div>
+
+
+      <div class="form-actions">
+
+        <button
+          type="button"
+          id="cancel-project"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="submit"
+        >
+          Create Project
+        </button>
+
+      </div>
+
+    </form>
+</dialog>
+    </div>
+
+    <script type="module" src="./index,js"></script>
+</body>
+</html>

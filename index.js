@@ -1,3 +1,6 @@
+function collectData(){
+
+}
 // This becomes the orchestrator.
 
 // It connects everything:
@@ -14,4 +17,12 @@
 //     ↓
 // dom.render()
 
+// events
+//    ↓
+// application logic
+//    ↓
+// state
+//    ↓
+// storage
+//    ↓
 
