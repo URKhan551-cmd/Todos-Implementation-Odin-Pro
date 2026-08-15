@@ -1,7 +1,9 @@
+
+
 renderProjects()
 renderTodos()
 renderTodoDetails()
-getTodoFormData()
+
 clearTodoForm()
 openTodoDialog()
 closeTodoDialog()
