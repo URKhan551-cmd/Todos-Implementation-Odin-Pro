@@ -1,5 +1,5 @@
 // Todo responsibilities
-function todoCreateManager(){
+export function todoCreateManager(){
 let todos = [];
 
 function createTodo(FormData){
