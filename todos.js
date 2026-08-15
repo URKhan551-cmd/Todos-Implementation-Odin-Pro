@@ -1,12 +1,14 @@
 // Todo responsibilities
+function todoCreateManager(){
+let todos = [];
 
 function createTodo(FormData){
     if(!FormData) return;
 
-    let id = crypto.getRandomUUID();
+    
 
-   return {
-    id,
+   const todo = {
+    id: crypto.randomUUID(),
     title: FormData.title,
     description: FormData.description,
     purpose: FormData.purpose,
@@ -16,6 +18,8 @@ function createTodo(FormData){
     checkList: FormData.checkList,
     createdAt: Date.now()
    }
+todos.push(todo);
+    return todo;
 };
 
 function updateTodo(id, updateData){
@@ -25,11 +29,15 @@ function updateTodo(id, updateData){
         return;
     };
 
-const newTodo  = {
-    ...todo,
-    ...updateData
-}
-    return  newTodo;// here i will get this modified todo to localStorage by help of function import from storage. 
+    // old implementation improved a bit
+// const newTodo  = {   
+//     ...todo,
+//     ...updateData
+// }
+
+    Object.assign(todo, updateData);
+    
+    return todo;// here i will get this modified todo to localStorage by help of function import from storage. 
 };
 
 
@@ -41,4 +49,13 @@ function toggleTodo(id){
     return todo;
 };
 
-export default {toggleTodo, updateTodo, createTodo};
+function getTodos(){
+    return [...todos];
+}    
+
+    return {updateTodo, toggleTodo, createTodo, getTodos};
+};
+// usage 
+// const exampleTodo = todoCreateManager();
+// now exampleTodo.craeteTodo(formData);
+// now exampleTodo.updateTodo(id, updateData);
