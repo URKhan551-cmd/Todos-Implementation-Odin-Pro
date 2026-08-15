@@ -5,7 +5,6 @@ let todos = [];
 function createTodo(FormData){
     if(!FormData) return;
 
-    
 
    const todo = {
     id: crypto.randomUUID(),
@@ -49,11 +48,25 @@ function toggleTodo(id){
     return todo;
 };
 
+
+ function deleteTodo(id){
+    const todoFind= todos.some(todo => todo.id === id);
+     if(!todoFind){
+         console.log("Todo not Found...");
+         return null;
+     };
+
+     const todo = todos.filter(todo => todo.id !== id);
+     
+     return [...todos];
+ };
+
+    
 function getTodos(){
     return [...todos];
 }    
 
-    return {updateTodo, toggleTodo, createTodo, getTodos};
+    return {updateTodo, toggleTodo, createTodo, deleteTodo, getTodos};
 };
 // usage 
 // const exampleTodo = todoCreateManager();
