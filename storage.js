@@ -1,4 +1,4 @@
-function saveNLoadData(){
+export default function saveNLoadData(){
 const TODO_STORAGE_KEY = "todos";
   // saveData take todos[]   will get put into localStorage.
 function saveData(todos){
