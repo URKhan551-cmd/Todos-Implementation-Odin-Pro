@@ -2,7 +2,7 @@ import {getFormData, validateFormData, clearTodoForm} from "./todoForm.js";
 
 import {todoCreateManager} from "./todoManager.js"
 import {saveNLoadData} from "./storage.js"
-import {openTodoDialog, closeTodoDialog} from "./render.js"
+import {openTodoDialog, closeTodoDialog, renderTodos} from "./render.js"
 
 
 
@@ -18,9 +18,13 @@ const emptyState = document.querySelector("#empty-state");
 
 // both add btn do the same this open a dialog for filling
 const addTodoBtn = document.querySelector("#add-todo-btn");    // function comes form    ./render.js
-addTodoBtn.addEventListener("click", openTodoDialog)
+addTodoBtn.addEventListener("click", () => {
+  openTodoDialog(todoDialog, todoForm)
+})
 const emptyAddTodoBtn = document.querySelector("#empty-add-todo-btn");  
-emptyAddTodoBtn.addEventListener("click", openTodoDialog)    // function comes from  ./render.js
+emptyAddTodoBtn.addEventListener("click", () => {
+  openTodoDialog(todoDialog, todoForm);
+})    // function comes from  ./render.js
 
 
 // bith func come from the render to close the form.
@@ -83,7 +87,7 @@ todoForm.addEventListener("submit", (e) => {
 
   storage.saveData(todoManager.getTodos());  // getTodods will retrieve the arr and storage.savedata take this Arr to localStorage.
   
-  
+  renderTodos(todoManager.getTodos(), emptyState, todoList);
   clearTodoForm(todoForm);
   todoDialog.close();
 });
