@@ -64,9 +64,15 @@ function toggleTodo(id){
     
 function getTodos(){
     return [...todos];
-}    
+};
 
-    return {updateTodo, toggleTodo, createTodo, deleteTodo, getTodos};
+function getTodo(id){
+    const todo = todos.map(todo => todo.id === id);
+    return todo;
+}
+       
+
+    return {updateTodo, toggleTodo, createTodo, deleteTodo, getTodos, getTodo};
 };
 // usage 
 // const exampleTodo = todoCreateManager();
