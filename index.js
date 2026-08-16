@@ -44,6 +44,12 @@ const projectForm = document.querySelector("#project-form");
 const mobileMenuBtn = document.querySelector("#mobile-manu-btn");
 const sidebar = document.querySelector("#sidebar");
 
+// for individual todo details page  appears.
+const todoDetailsDialog =
+    document.querySelector("#todo-details-dialog");
+const todoDetails =
+    document.querySelector("#todo-details");
+
 // This becomes the orchestrator.
 
 // It connects everything:
