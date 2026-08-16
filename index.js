@@ -14,6 +14,18 @@ const todoFormHtml = document.querySelector("#dialog-form");
 const todoDialog = document.querySelector("#todo-dialog");
 
 const todoList = document.querySelector("#todo-list");
+todoList.addEventListener("click", (e) => {
+    const todoCard = e.target.closest(".todo-card");
+  if(!todoCard) return;
+ const todoCardId todoCard.dataset.todoId;
+  const  todo = todoManager.getTodo(todoCardId);
+  if(!todo) return;
+
+  renderTodoDetails(todo, todoDetails);
+  todoDetailsDialog.showModal();
+});
+
+
 const emptyState = document.querySelector("#empty-state");
 
 // both add btn do the same this open a dialog for filling
@@ -49,6 +61,17 @@ const todoDetailsDialog =
     document.querySelector("#todo-details-dialog");
 const todoDetails =
     document.querySelector("#todo-details");
+todoDetails.addEventListener("click", (e) => {
+  if (!e.target.matches(".delete-todo")) {
+        return;
+    };
+  
+  const todoId = e.target.dataset.todoId;
+  const todos = todoManager.deleteTodo(todoId);
+  storage.saveData(todos);
+  todoDetailsDialog.close();
+  renderTodos(todos, emptyState, todoList);
+})
 
 // This becomes the orchestrator.
 
