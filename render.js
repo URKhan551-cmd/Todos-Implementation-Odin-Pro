@@ -7,8 +7,11 @@ renderTodoDetails()
 clearTodoForm() 
 export function openTodoDialog(){  // take this func to index.js where button lies
   clearTodoForm(formData);
-  openDialog.showModal();   
+  todoDialog.showModal();   
 }
-closeTodoDialog()
+export function closeTodoDialog(){
+  clearTodoForm(formData);
+  todoDialog.close();
+}
 openProjectDialog()
 closeProjectDialog()
