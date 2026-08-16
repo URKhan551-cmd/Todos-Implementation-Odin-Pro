@@ -2,6 +2,8 @@ import {getFormData, validateFormData, clearTodoForm} from "./todoForm.js";
 
 import {todoCreateManager} from "./todoManager.js"
 import {saveNLoadData} from "./storage.js"
+import {openTodoDialog} from "./render.js"
+
 
 
 const storage = saveNLoadData();
@@ -16,15 +18,10 @@ const emptyState = document.querySelector("#empty-state");
 
 // both add btn do the same this open a dialog for filling
 const addTodoBtn = document.querySelector("#add-todo-btn");    // function comes form    ./render.js
-addTodoBtn.addEventListener("click", () => {
-  clearTodoForm(formData);
-  todoDialog.showModal();   // this will open a dialog page where we can fill fields. 
-})
-const emptyAddTodoBtn = document.querySelector("#empty-add-todo-btn");  // function comes from  ./render.js
-emptyAddTodoBtn.addEventListener("click", () => {
-  clearTodoForm(formData);
-  todoDialog.showModal();
-})
+addTodoBtn.addEventListener("click", openTodoDialog)
+const emptyAddTodoBtn = document.querySelector("#empty-add-todo-btn");  
+emptyAddTodoBtn.addEventListener("click", openTodoDialog)    // function comes from  ./render.js
+
 
 const cancelTodoBtn = document.querySelector("#cancel-todo");
 const closeDialogBtn = document.querySelector("#close-dialog-btn");
