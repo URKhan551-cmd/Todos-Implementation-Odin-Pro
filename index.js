@@ -2,7 +2,7 @@ import {getFormData, validateFormData, clearTodoForm} from "./todoForm.js";
 
 import {todoCreateManager} from "./todoManager.js"
 import {saveNLoadData} from "./storage.js"
-import {openTodoDialog} from "./render.js"
+import {openTodoDialog, closeTodoDialog} from "./render.js"
 
 
 
@@ -10,7 +10,7 @@ const storage = saveNLoadData();
 const storedTodos = storage.loadData();  // todos already present will show up here.
 const todoManager = todoCreateManager(storedTodos);
 
-const todoForm = document.querySelector("#dialog-form");
+const todoFormHtml = document.querySelector("#dialog-form");
 const todoDialog = document.querySelector("#todo-dialog");
 
 const todoList = document.querySelector("#todo-list");
@@ -23,8 +23,13 @@ const emptyAddTodoBtn = document.querySelector("#empty-add-todo-btn");
 emptyAddTodoBtn.addEventListener("click", openTodoDialog)    // function comes from  ./render.js
 
 
+// bith func come from the render to close the form.
 const cancelTodoBtn = document.querySelector("#cancel-todo");
+cancelTodoBtn.addEventListener("click", closeTodoDialog);  // this func comes from   ./render.js
 const closeDialogBtn = document.querySelector("#close-dialog-btn");
+closeDialogBtn.addEventListener("click", closeTodoDialog);  // this also comes from ./render.js
+
+
 
 const projectList = document.querySelector("#project-list");
 const addProjectBtn = document.querySelector("#add-project-btn");
@@ -70,7 +75,7 @@ todoForm.addEventListener("submit", (e) => {
   const result = validateFormData(formData);
 
   if(!result.success){
-    console.log(result.errors.flatten().fieldErrors);
+    console.log(result.error.flatten().fieldErrors);
     return;
   };
 
@@ -78,8 +83,9 @@ todoForm.addEventListener("submit", (e) => {
 
   storage.saveData(todoManager.getTodos());  // getTodods will retrieve the arr and storage.savedata take this Arr to localStorage.
   
-  storeFunc.saveData(validTodo);
-  clearTodoForm(formData);
+  
+  clearTodoForm(todoForm);
+  todoDialog.close();
 });
 
 
