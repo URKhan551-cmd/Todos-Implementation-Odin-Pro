@@ -3,8 +3,8 @@ export function projectManager(initialProjects = []){
   
  function createProject(projectName){
    const project = {
-     id= crypto.ramdomUUID(),
-     name = projectName,
+     id: crypto.ramdomUUID(),
+     name: projectName,
      createdAt: Date.now()
  }
   projects.push(project);
