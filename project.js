@@ -1,4 +1,4 @@
-export function projectManager(initialProjects = []){
+export function createProjectManager(initialProjects = []){
   let projects = [...initialProjects];
   
  function createProject(projectName){
@@ -23,8 +23,6 @@ function getProject(id){
 function getProjects(){
   return [...projects];
 }
-addTodoToProject()
-removeTodoFromProject()
-findTodo()
+
 return { createProject, deleteProject, getProject, getProjects}
 }
