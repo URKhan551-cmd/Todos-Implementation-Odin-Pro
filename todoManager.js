@@ -2,12 +2,13 @@
 export function todoCreateManager(){
 let todos = [];
 
-function createTodo(FormData){
+function createTodo(FormData, projectId){
     if(!FormData) return;
 
 
    const todo = {
     id: crypto.randomUUID(),
+    projectId: projectId,   
     title: FormData.title,
     description: FormData.description,
     purpose: FormData.purpose,
@@ -69,10 +70,14 @@ function getTodos(){
 function getTodo(id){
     const todo = todos.map(todo => todo.id === id);
     return todo;
+};
+
+function getTodosByProject(projectId){
+    return todos.filter(todo => todo.projectId === projectId)
 }
        
 
-    return {updateTodo, toggleTodo, createTodo, deleteTodo, getTodos, getTodo};
+    return {updateTodo, toggleTodo, createTodo, deleteTodo, getTodos, getTodo, getTodosByProject};
 };
 // usage 
 // const exampleTodo = todoCreateManager();
