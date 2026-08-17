@@ -2,13 +2,23 @@ import {getFormData, validateFormData, clearTodoForm} from "./todoForm.js";
 
 import {todoCreateManager} from "./todoManager.js"
 import {saveNLoadData} from "./storage.js"
-import {openTodoDialog, closeTodoDialog, renderTodos} from "./render.js"
+import {openTodoDialog, closeTodoDialog, renderTodos, renderProjects} from "./render.js"
 
+import {createProjectManager} from "./project.js"
+let projectsData = projectManager();
 
 
 const storage = saveNLoadData();
-const storedTodos = storage.loadData();  // todos already present will show up here.
+const storedTodos = storage.loadData();// todos already present will show up here.
+const storedPeojects = storage.loadProjects();
 const todoManager = todoCreateManager(storedTodos);
+const projectManager = createProjectManager(storedProjects.length ? storedProjects : [{
+    id: "default",
+    name: "default",
+    createdAt: Date.now()
+}]);
+
+
 
 const todoFormHtml = document.querySelector("#dialog-form");
 const todoDialog = document.querySelector("#todo-dialog");
@@ -48,7 +58,31 @@ closeDialogBtn.addEventListener("click", closeTodoDialog);  // this also comes f
 
 const projectDialog = document.querySelector("#project-dialog");
 const projectForm = document.querySelector("#project-form");
+projectForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const projectData = Object.fromEntries(formData);
+    const project = projectManager.createProject(projectData.projectName);  // this will create a individual project by projectName.
+    console.log(projectData) // { projectName: "work"};
+    const projects = projectManager.getProjects(); // this will give us the stored projects in arr of project.js
+    storage.saveProjects(projects);
+    renderProjects(projects, projectList);
+    projectForm.reset();
+    projectDialog.close();
+});
+
+
+let currentProjectId = "default";
 const projectList = document.querySelector("#project-list");
+projectList.addEventListener("click", (e) => {
+    const pojectButton = e.target.closest(".project-item");
+    if(!projectButton) return;
+  currentProject =  projectButton.dataset.projectId;
+    const  todos = todoManager.getTodosByProject(currentProject);
+    renderTodos(todos, emptyState, todoList);
+});
+
+
 const closeProjectBtn = document.querySelector("#close-project-dialog");
 closeProjectBtn.addEventListener("click", () => {
     projectDialog.close();
