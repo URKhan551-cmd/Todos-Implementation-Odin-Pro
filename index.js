@@ -46,12 +46,30 @@ const closeDialogBtn = document.querySelector("#close-dialog-btn");
 closeDialogBtn.addEventListener("click", closeTodoDialog);  // this also comes from ./render.js
 
 
-
-const projectList = document.querySelector("#project-list");
-const addProjectBtn = document.querySelector("#add-project-btn");
-
 const projectDialog = document.querySelector("#project-dialog");
 const projectForm = document.querySelector("#project-form");
+const projectList = document.querySelector("#project-list");
+const closeProjectBtn = document.querySelector("#close-project-dialog");
+closeProjectBtn.addEventListener("click", () => {
+    projectDialog.close();
+})
+
+
+const addProjectBtn = document.querySelector("#add-project-btn");
+addProjectBtn.addEventListener("click", () => {
+    projectDialog.showModal();
+});
+projectForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+     // 1. Get project name
+    // 2. Validate it
+    // 3. Create project through projectManager
+    // 4. Save projects
+    // 5. Render projects
+    // 6. Close dialog
+});
+
+
 
 const mobileMenuBtn = document.querySelector("#mobile-manu-btn");
 const sidebar = document.querySelector("#sidebar");
