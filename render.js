@@ -90,7 +90,18 @@ export function closeTodoDialog(todoDialog, todoForm){
   todoDialog.close();
 };
 
-renderProjects()   
+export function renderProjects(projects, projectList){
+   projectList.textContent = "";
+
+   projects.forEach(project => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.classList.add("project-item");
+      button.dataset.projectId = project.id;
+      button.textContent = project.name;
+      projectList.appendChild(button);
+   })
+}   
 openProjectDialog()
 closeProjectDialog()
 
