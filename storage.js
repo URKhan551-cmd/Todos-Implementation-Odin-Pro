@@ -1,5 +1,6 @@
 export default function saveNLoadData(){
 const TODO_STORAGE_KEY = "todos";
+  const PROJECT_STORAGE_KEY = "projects";
   // saveData take todos[]   will get put into localStorage.
 function saveData(todos){
    localStorage.setItem(TODO_STORAGE_KEY, JSON.stringify(todos));
