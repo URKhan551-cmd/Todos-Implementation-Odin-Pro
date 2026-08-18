@@ -12,6 +12,10 @@ export function createProjectManager(initialProjects = []){
 }
 
 function deleteProject(id){
+  if(id === "default"){
+    return false;
+  }
+  
    projects = projects.filter(project => project.id !== id);
   return [...projects];
 };
