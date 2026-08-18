@@ -1,8 +1,3 @@
-import {todoCreateManager} from "./todoManager.js";
-const todoManager = todoCreateManager();
-
-
-
 
 export function renderTodos(todos, emptyState, todoList){  // todos comes from storage.js and pass through todoManager.getTodos();
    todoList.textContent = "";
@@ -15,19 +10,52 @@ todos.forEach(todo => {
    const todoCard = document.createElement("article");
    todoCard.classList.add("todo-card");
    todoCard.dataset.todoId = todo.id;
+
+   const checkBox = document.createElement("input");
+checkBox.type = "checkBox";
+checkBox.checked = todo.completed;
+checkBox.classList.add("todo-complete")
+checkBox.dataset.todoId = todo.id;
+
+   
    const title = document.createElement("h3");
    title.textContent = todo.title;
    const description = document.createElement("p");
         description.textContent = todo.description;
 
-   todoCard.append(title, description);
+   const editButton = document.createElement("button");
+editButton.type = "button";
+editButton.textContent = "Edit";
+editButton.classList.add("edit-todo");
+editButton.dataset.todoId = todo.id;
+
+   const deleteButton =
+    document.createElement("button");
+deleteButton.type = "button";
+deleteButton.textContent = "Delete";
+deleteButton.classList.add("delete-todo");
+deleteButton.dataset.todoId = todo.id;
+
+   const detailsButton = document.createElement("button");
+
+        detailsButton.type = "button";
+        detailsButton.textContent = "Details";
+        detailsButton.classList.add("todo-details");
+        detailsButton.dataset.todoId = todo.id;
+   
+   todoCard.append(checkBox,
+            title,
+            description,
+            detailsButton,
+            editButton,
+            deleteButton);
    todoList.appendChild(todoCard);
    
 })
    
 }
 
-export function renderTodoDetails(todos, todoDetails){ // here container is an html element
+export function renderTodoDetails(todo, todoDetails){ // here container is an html element
    
    todoDetails.textContent = "";
    
@@ -73,14 +101,14 @@ export function renderTodoDetails(todos, todoDetails){ // here container is an h
         dueDate,
         priority,
         status,
-        checklist,
+        checkList,
         deleteBtn
       )
-   })
+   
    
 }
 
-clearTodoForm() 
+
 export function openTodoDialog(todoDialog, todoForm){  // take this func to index.js where button lies
   clearTodoForm(todoForm);
   todoDialog.showModal();   
