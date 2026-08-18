@@ -1,9 +1,9 @@
 // Todo responsibilities
-export function todoCreateManager(){
-let todos = [];
+export function todoCreateManager(initialTodos= []){
+let todos = [...initialTodos];
 
 function createTodo(FormData, projectId){
-    if(!FormData) return;
+    if(!FormData || projectId ) return;
 
 
    const todo = {
