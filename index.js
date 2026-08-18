@@ -2,7 +2,7 @@ import {getFormData, validateFormData, clearTodoForm} from "./todoForm.js";
 
 import {todoCreateManager} from "./todoManager.js"
 import {saveNLoadData} from "./storage.js"
-import {openTodoDialog, closeTodoDialog, renderTodos, renderProjects} from "./render.js"
+import {openTodoDialog, closeTodoDialog, renderTodos, renderProjects, checkBox} from "./render.js"
 
 import {createProjectManager} from "./project.js"
 let projectsData = projectManager();
@@ -22,19 +22,114 @@ const projectManager = createProjectManager(storedProjects.length ? storedProjec
 
 const todoFormHtml = document.querySelector("#dialog-form");
 const todoDialog = document.querySelector("#todo-dialog");
+// here will be AN EDIT BUTTON For TODO EDITING
+
+
+
+
 
 const todoList = document.querySelector("#todo-list");
 todoList.addEventListener("click", (e) => {
-    const todoCard = e.target.closest(".todo-card");
-  if(!todoCard) return;
- const todoCardId todoCard.dataset.todoId;
-  const  todo = todoManager.getTodo(todoCardId);
-  if(!todo) return;
+     const detailsButton =
+        e.target.closest(".todo-details");
 
-  renderTodoDetails(todo, todoDetails);
-  todoDetailsDialog.showModal();
+    if (detailsButton) {
+
+        const todoId =
+            detailsButton.dataset.todoId;
+
+        const todo =
+            todoManager.getTodo(todoId);
+
+        if (!todo) return;
+
+        renderTodoDetails(
+            todo,
+            todoDetails
+        );
+
+        todoDetailsDialog.showModal();
+
+        return;
+    }
+
+    // EDIT
+    const editButton = e.target.closest(".edit-todo");
+
+    if (editButton) {
+        const todoId = editButton.dataset.todoId;
+
+        const todo = todoManager.getTodo(todoId);
+
+        if (!todo) return;
+
+        document.querySelector("#todo-id").value = todo.id;
+        document.querySelector("#todo-title").value = todo.title;
+        document.querySelector("#todo-description").value = todo.description;
+        document.querySelector("#todo-purpose").value = todo.purpose ?? "";
+        document.querySelector("#todo-notes").value = todo.notes ?? "";
+        document.querySelector("#todo-due-date").value = todo.dueDate;
+
+        todoDialog.showModal();
+
+        return;
+    }
+
+
+    // DELETE
+    const deleteButton = e.target.closest(".delete-todo");
+
+    if (deleteButton) {
+        const todoId = deleteButton.dataset.todoId;
+
+        todoManager.deleteTodo(todoId);
+
+        storage.saveData(
+            todoManager.getTodos()
+        );
+
+        const projectTodos =
+            todoManager.getTodosByProject(currentProjectId);
+
+        renderTodos(
+            projectTodos,
+            emptyState,
+            todoList
+        );
+
+        return;
+    }
 });
 
+todoList.addEventListener("change", (e) => {
+
+    if (!e.target.matches(".todo-complete")) {
+        return;
+    }
+
+    const todoId = e.target.dataset.todoId;
+
+    todoManager.toggleTodo(todoId);
+
+    storage.saveData(
+        todoManager.getTodos()
+    );
+
+    const projectTodos =
+        todoManager.getTodosByProject(currentProjectId);
+renderTodos(
+        projectTodos,
+        emptyState,
+        todoList
+    );
+});
+
+todoCard.append(
+    checkbox,
+    title,
+    description,
+    editButton
+);
 
 const emptyState = document.querySelector("#empty-state");
 
@@ -75,10 +170,10 @@ projectForm.addEventListener("submit", (e) => {
 let currentProjectId = "default";
 const projectList = document.querySelector("#project-list");
 projectList.addEventListener("click", (e) => {
-    const pojectButton = e.target.closest(".project-item");
+    const projectButton = e.target.closest(".project-item");
     if(!projectButton) return;
-  currentProject =  projectButton.dataset.projectId;
-    const  todos = todoManager.getTodosByProject(currentProject);
+  currentProjectId =  projectButton.dataset.projectId;
+    const  todos = todoManager.getTodosByProject(currentProjectId);
     renderTodos(todos, emptyState, todoList);
 });
 
@@ -92,15 +187,6 @@ closeProjectBtn.addEventListener("click", () => {
 const addProjectBtn = document.querySelector("#add-project-btn");
 addProjectBtn.addEventListener("click", () => {
     projectDialog.showModal();
-});
-projectForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-     // 1. Get project name
-    // 2. Validate it
-    // 3. Create project through projectManager
-    // 4. Save projects
-    // 5. Render projects
-    // 6. Close dialog
 });
 
 
@@ -164,14 +250,60 @@ todoForm.addEventListener("submit", (e) => {
     return;
   };
 
-  const todo = todoManager.createTodo(result.data);
+    const todoId =
+        document.querySelector("#todo-id").value;
 
-  storage.saveData(todoManager.getTodos());  // getTodods will retrieve the arr and storage.savedata take this Arr to localStorage.
+    if (todoId) {
+        todoManager.updateTodo(
+            todoId,
+            result.data
+        );
+    } else {
+        todoManager.createTodo(
+            result.data,
+            currentProjectId
+        );
+    }
   
-  renderTodos(todoManager.getTodos(), emptyState, todoList);
+  storage.saveData(todoManager.getTodos());  // getTodods will retrieve the arr and storage.savedata take this Arr to localStorage.
+
+ const projectTodos = todoManager.getTodosByProject(currentProjectId);
+    
+  renderTodos(projectTodos, emptyState, todoList);
   clearTodoForm(todoForm);
   todoDialog.close();
 });
 
+
+// if i delete the project the todos must be go to the default project
+// no to delete todos when i click on project delete.
+// todos persist.
+function deleteProjectAndHandleTodos(projectId){
+    if(projectId === "default"){
+        return;
+    };
+    
+const todos = todoManager.getTodos(); // this will giveus an arr of [...todos]
+    todos.forEach(todo => {
+        if(todo.projectId === projectId){
+            todoManager.updateTodo(todo.id, {
+                projectId: "default"
+            })
+        }
+    });
+
+projectManager.deleteProject(projectId);    // this will delete just project
+
+storage.saveData(todoManager.getTodos());   // this will get todos from the array and put inside of local storage
+
+storage.saveProjects(projectManager.getProjects());   // this will get projects from the arr and put it into localStorage.
+
+currentProjectId = "default";     
+
+renderProjects(projectManager.getProjects, projectList);       
+renderTodos(todosManager.getTodosByProject("default"), emptyState, todoList);
+    
+    
+}
 
 
